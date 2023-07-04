@@ -83,11 +83,11 @@ const List = () => {
   };
 
   return (
-    <div className="container mx-auto flex gap-5 mt-24">
+    <div className="container mx-auto flex overflow-x-auto pb-4">
       {lists.map((list) => (
         <div
           key={list.id}
-          className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2"
+          className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4"
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, list.id)}
         >
@@ -107,6 +107,7 @@ const List = () => {
           </ul>
         </div>
       ))}
+
       <div>
         {!isNewListFormOpen && (
           <button
