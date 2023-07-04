@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NewListForm from "./NewListForm";
+import { TiTimes } from "react-icons/ti";
 
 const List = () => {
   const [lists, setLists] = useState([
@@ -82,16 +83,30 @@ const List = () => {
     }
   };
 
+  const removeList = (id) => {
+    const updatedLists = lists.filter((list) => list.id !== id);
+    setLists(updatedLists);
+  };
+
   return (
-    <div className="container mx-auto flex overflow-x-auto pb-4">
+    <div className="container mx-auto flex overflow-x-auto pb-4 ">
       {lists.map((list) => (
         <div
           key={list.id}
-          className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4"
+          className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4 relative"
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, list.id)}
         >
-          <h3 className="text-lg font-bold px-2 py-1">{list.title}</h3>
+          <div className="flex justify-between mb-2">
+            <h3 className="text-lg font-bold">{list.title}</h3>
+            <button
+              onClick={() => {
+                removeList(list.id);
+              }}
+            >
+              <TiTimes className="" />
+            </button>
+          </div>
           <ul>
             {list.cards.map((card, index) => (
               <li
