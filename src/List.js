@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NewListForm from "./NewListForm";
 
 const List = () => {
   const [lists, setLists] = useState([
@@ -25,6 +26,8 @@ const List = () => {
       cards: [{ id: 6, text: "Task 6" }],
     },
   ]);
+
+  const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
 
   const handleDragStart = (e, listId, cardId) => {
     e.dataTransfer.setData("text/plain", JSON.stringify({ listId, cardId }));
@@ -104,6 +107,25 @@ const List = () => {
           </ul>
         </div>
       ))}
+      <div>
+        {!isNewListFormOpen && (
+          <button
+            onClick={() => {
+              setIsNewListFormOpen(!isNewListFormOpen);
+            }}
+            className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2"
+          >
+            Add another list
+          </button>
+        )}
+        {isNewListFormOpen && (
+          <NewListForm
+            lists={lists}
+            setLists={setLists}
+            setIsNewListFormOpen={setIsNewListFormOpen}
+          />
+        )}
+      </div>
     </div>
   );
 };

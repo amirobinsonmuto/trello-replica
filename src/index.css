@@ -15,3 +15,25 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* common components */
+
+.button-primary {
+  background-color: #3490dc;
+  color: #fff;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+}
+
+.button-primary:hover {
+  background-color: #2779bd;
+}
+
+.button-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 144, 220, 0.5);
+}
+
+.button-primary:active {
+  background-color: #1c4a6e;
+}
