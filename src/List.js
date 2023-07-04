@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NewListForm from "./NewListForm";
 import { TiTimes } from "react-icons/ti";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const List = () => {
   const [lists, setLists] = useState([
@@ -89,7 +90,7 @@ const List = () => {
   };
 
   return (
-    <div className="container mx-auto flex overflow-x-auto pb-4 ">
+    <div className="container mx-auto flex overflow-x-auto mt-24 pb-4 ">
       {lists.map((list) => (
         <div
           key={list.id}
@@ -120,6 +121,17 @@ const List = () => {
               </li>
             ))}
           </ul>
+          <button
+            onClick={() => {
+              setIsNewListFormOpen(!isNewListFormOpen);
+            }}
+            className="flex items-center gap-2 mt-4 hover:opacity-70"
+          >
+            <span>
+              <AiOutlinePlus />
+            </span>
+            <span> Add card</span>
+          </button>
         </div>
       ))}
 
