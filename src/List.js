@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NewListForm from "./NewListForm";
+import NewCardForm from "./NewCardForm";
 import { TiTimes } from "react-icons/ti";
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -30,6 +31,8 @@ const List = () => {
   ]);
 
   const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
+  const [isNewCardFormOpen, setIsNewCardFormOpen] = useState(false);
+  const [activeListId, setActiveListId] = useState(null);
 
   const handleDragStart = (e, listId, cardId) => {
     e.dataTransfer.setData("text/plain", JSON.stringify({ listId, cardId }));
@@ -81,6 +84,7 @@ const List = () => {
         return list;
       });
       setLists(updatedLists);
+      setActiveListId(null); // Reset the active list ID
     }
   };
 
@@ -121,17 +125,27 @@ const List = () => {
               </li>
             ))}
           </ul>
-          <button
-            onClick={() => {
-              setIsNewListFormOpen(!isNewListFormOpen);
-            }}
-            className="flex items-center gap-2 mt-4 hover:opacity-70"
-          >
-            <span>
-              <AiOutlinePlus />
-            </span>
-            <span> Add card</span>
-          </button>
+          <div>
+            {(!isNewCardFormOpen || activeListId !== list.id) && (
+              <button
+                onClick={() => {
+                  setActiveListId(list.id);
+                  setIsNewCardFormOpen(true);
+                }}
+                className="flex items-center gap-2 mt-4 hover:opacity-70"
+              >
+                <AiOutlinePlus />
+                <span>Add a card</span>
+              </button>
+            )}
+            {isNewCardFormOpen && activeListId === list.id && (
+              <NewCardForm
+                lists={lists}
+                setLists={setLists}
+                setIsNewCardFormOpen={setIsNewCardFormOpen}
+              />
+            )}
+          </div>
         </div>
       ))}
 
