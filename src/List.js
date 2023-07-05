@@ -8,7 +8,7 @@ const List = () => {
   const [lists, setLists] = useState([
     {
       id: 1,
-      title: "To Do",
+      title: "Sample list - To Do",
       cards: [
         { id: 1, text: "Task 1" },
         { id: 2, text: "Task 2" },
@@ -17,7 +17,7 @@ const List = () => {
     },
     {
       id: 2,
-      title: "In Progress",
+      title: "Sample list - In Progress",
       cards: [
         { id: 4, text: "Task 4" },
         { id: 5, text: "Task 5" },
@@ -25,7 +25,7 @@ const List = () => {
     },
     {
       id: 3,
-      title: "Done",
+      title: "Sample list - Done",
       cards: [{ id: 6, text: "Task 6" }],
     },
   ]);

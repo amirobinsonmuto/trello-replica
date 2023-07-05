@@ -11,7 +11,7 @@ const NewListForm = ({ lists, setLists, setIsNewListFormOpen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newList = {
-      id: lists.length + 1,
+      id: Date.now(),
       title: newListTitle,
       cards: [],
     };
