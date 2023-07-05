@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { TfiClose } from "react-icons/tfi";
 
-const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen }) => {
+const NewCardForm = ({
+  lists,
+  setLists,
+  setIsNewCardFormOpen,
+  activeListId,
+}) => {
   const [newCardTitle, setNewCardTitle] = useState("");
 
   const handleInputChange = (e) => {
@@ -10,13 +15,17 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newList = {
-      id: lists.length + 1,
-      title: newCardTitle,
-      cards: [],
-    };
-    setLists([...lists, newList]);
-    setNewCardTitle(false);
+    if (newCardTitle.trim() !== "") {
+      const updatedLists = lists.map((list) => {
+        if (list.id === activeListId) {
+          const newCard = { id: Date.now(), text: newCardTitle };
+          return { ...list, cards: [...list.cards, newCard] };
+        }
+        return list;
+      });
+      setLists(updatedLists);
+      setIsNewCardFormOpen(false);
+    }
   };
 
   return (

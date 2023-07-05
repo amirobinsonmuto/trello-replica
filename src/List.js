@@ -143,6 +143,7 @@ const List = () => {
                 lists={lists}
                 setLists={setLists}
                 setIsNewCardFormOpen={setIsNewCardFormOpen}
+                activeListId={activeListId}
               />
             )}
           </div>
