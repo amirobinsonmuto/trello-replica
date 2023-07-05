@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NewListForm from "./NewListForm";
 import NewCardForm from "./NewCardForm";
-import { TiTimes } from "react-icons/ti";
+import { TfiClose } from "react-icons/tfi";
 import { AiOutlinePlus } from "react-icons/ai";
 
 const List = () => {
@@ -109,7 +109,7 @@ const List = () => {
                 removeList(list.id);
               }}
             >
-              <TiTimes className="" />
+              <TfiClose className="close-icon" />
             </button>
           </div>
           <ul>

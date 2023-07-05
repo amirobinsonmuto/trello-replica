@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TiTimes } from "react-icons/ti";
+import { TfiClose } from "react-icons/tfi";
 
 const NewListForm = ({ lists, setLists, setIsNewListFormOpen }) => {
   const [newListTitle, setNewListTitle] = useState("");
@@ -39,7 +39,7 @@ const NewListForm = ({ lists, setLists, setIsNewListFormOpen }) => {
           }}
           className="close-button"
         >
-          <TiTimes className="close-icon" />
+          <TfiClose className="close-icon" />
         </button>
       </form>
     </div>

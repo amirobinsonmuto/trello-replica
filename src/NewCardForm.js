@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TiTimes } from "react-icons/ti";
+import { TfiClose } from "react-icons/tfi";
 
 const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen }) => {
   const [newCardTitle, setNewCardTitle] = useState("");
@@ -39,7 +39,7 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen }) => {
           }}
           className="close-button"
         >
-          <TiTimes className="close-icon" />
+          <TfiClose className="close-icon" />
         </button>
       </form>
     </div>
