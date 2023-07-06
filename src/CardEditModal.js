@@ -48,9 +48,11 @@ const CardEditModal = ({
               </button>
             )}
           </div>
-          <p className="ml-9">
-            {lists[listIndex].cards[cardIndex].description}
-          </p>
+          {!isDescriptionFormOpen && (
+            <p className="ml-9">
+              {lists[listIndex].cards[cardIndex].description}
+            </p>
+          )}
           {isDescriptionFormOpen && (
             <CardDescriptionForm
               cardIndex={cardIndex}
