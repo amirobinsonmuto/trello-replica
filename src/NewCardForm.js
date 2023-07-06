@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { TfiClose } from "react-icons/tfi";
 
-const NewCardForm = ({
-  lists,
-  setLists,
-  setIsNewCardFormOpen,
-  activeListId,
-}) => {
+const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
   const [newCardTitle, setNewCardTitle] = useState("");
 
   const handleInputChange = (e) => {
@@ -17,7 +12,7 @@ const NewCardForm = ({
     e.preventDefault();
     if (newCardTitle.trim() !== "") {
       const updatedLists = lists.map((list) => {
-        if (list.id === activeListId) {
+        if (list.id === activeList.id) {
           const newCard = {
             id: Date.now(),
             text: newCardTitle,

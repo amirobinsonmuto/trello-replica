@@ -65,7 +65,6 @@ const List = () => {
 
   const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
   const [isNewCardFormOpen, setIsNewCardFormOpen] = useState(false);
-  const [activeListId, setActiveListId] = useState(null);
   const [activeList, setActiveList] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -120,7 +119,7 @@ const List = () => {
         return list;
       });
       setLists(updatedLists);
-      setActiveListId(null); // Reset the active list ID
+      setActiveList(null); // Reset the active list ID
     }
   };
 
@@ -167,10 +166,10 @@ const List = () => {
             ))}
           </ul>
           <div>
-            {(!isNewCardFormOpen || activeListId !== list.id) && (
+            {(!isNewCardFormOpen || activeList.id !== list.id) && (
               <button
                 onClick={() => {
-                  setActiveListId(list.id);
+                  setActiveList(list);
                   setIsNewCardFormOpen(true);
                 }}
                 className="flex items-center gap-2 mt-4 hover:opacity-70"
@@ -179,12 +178,12 @@ const List = () => {
                 <span>Add a card</span>
               </button>
             )}
-            {isNewCardFormOpen && activeListId === list.id && (
+            {isNewCardFormOpen && activeList.id === list.id && (
               <NewCardForm
                 lists={lists}
                 setLists={setLists}
                 setIsNewCardFormOpen={setIsNewCardFormOpen}
-                activeListId={activeListId}
+                activeList={activeList}
               />
             )}
           </div>
