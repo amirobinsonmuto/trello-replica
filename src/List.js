@@ -11,29 +11,62 @@ const List = () => {
       id: 1,
       title: "Sample list - To Do",
       cards: [
-        { id: 1, text: "Task 1" },
-        { id: 2, text: "Task 2" },
-        { id: 3, text: "Task 3" },
+        {
+          id: 1,
+          text: "Task 1",
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        {
+          id: 2,
+          text: "Task 2",
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        {
+          id: 3,
+          text: "Task 3",
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
       ],
     },
     {
       id: 2,
       title: "Sample list - In Progress",
       cards: [
-        { id: 4, text: "Task 4" },
-        { id: 5, text: "Task 5" },
+        {
+          id: 4,
+          text: "Task 4",
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        {
+          id: 5,
+          text: "Task 5",
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
       ],
     },
     {
       id: 3,
       title: "Sample list - Done",
-      cards: [{ id: 6, text: "Task 6" }],
+      cards: [
+        {
+          id: 6,
+          text: "Task 6",
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+      ],
     },
   ]);
 
   const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
   const [isNewCardFormOpen, setIsNewCardFormOpen] = useState(false);
   const [activeListId, setActiveListId] = useState(null);
+  const [activeList, setActiveList] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -125,6 +158,7 @@ const List = () => {
                 data-index={index}
                 onClick={() => {
                   setActiveCard(card);
+                  setActiveList(list);
                   setIsModalOpen(true);
                 }}
               >
@@ -179,7 +213,10 @@ const List = () => {
       {/* modal */}
       {isModalOpen && (
         <CardEditModal
-          card={activeCard}
+          activeCard={activeCard}
+          activeList={activeList}
+          lists={lists}
+          setLists={setLists}
           onClose={() => setIsModalOpen(false)}
         />
       )}
