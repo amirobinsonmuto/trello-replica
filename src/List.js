@@ -130,7 +130,7 @@ const List = () => {
 
   return (
     <div className="container mx-auto flex overflow-x-auto mt-24 pb-4 ">
-      {lists.map((list) => (
+      {lists.map((list, index) => (
         <div
           key={list.id}
           className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4 relative"

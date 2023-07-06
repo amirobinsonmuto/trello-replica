@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { isCompositeComponent } from "react-dom/test-utils";
 
 const CardDescriptionForm = ({
-  activeCard,
-  setActiveCard,
-  activeList,
+  cardIndex,
+  listIndex,
   lists,
   setLists,
   setIsDescriptionFormOpen,
 }) => {
   const [newDescriptionText, setNewDescriptionText] = useState(
-    activeCard.description
+    lists[listIndex].cards[cardIndex].description
   );
 
   const handleChange = (e) => {
@@ -22,20 +20,12 @@ const CardDescriptionForm = ({
 
     // Create a copy of the activeCard object
     const updatedCard = {
-      ...activeCard,
+      ...lists[listIndex].cards[cardIndex],
       description: newDescriptionText,
     };
 
-    setActiveCard(updatedCard);
-
     // Create a copy of the lists array
     const copyLists = [...lists];
-
-    //Find the index of the activeList within the lists array
-    const listIndex = lists.findIndex((l) => l.id === activeList.id);
-
-    // Find the index of the activeCard within the cards array of the corresponding list
-    const cardIndex = activeList.cards.findIndex((c) => c.id === activeCard.id);
 
     // Update the cards array within the corresponding list
     copyLists[listIndex].cards[cardIndex] = updatedCard;
@@ -54,7 +44,7 @@ const CardDescriptionForm = ({
         rows={8}
         cols={40}
         placeholder={
-          activeCard.description === ""
+          lists[listIndex].cards[cardIndex].description === ""
             ? "Write description"
             : newDescriptionText
         }
