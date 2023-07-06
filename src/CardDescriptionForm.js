@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { isCompositeComponent } from "react-dom/test-utils";
 
 const CardDescriptionForm = ({
   activeCard,
@@ -18,35 +19,26 @@ const CardDescriptionForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Find the list ID
-    const listId = activeList.id;
-
-    // Find the card index within the list
-    const cardIndex = lists[listId].cards.findIndex(
-      (c) => c.id === activeCard.id
-    );
-
-    // Create a new updated card object
+    // Create a copy of the activeCard object
     const updatedCard = {
       ...activeCard,
       description: newDescriptionText,
     };
 
-    // Create a new updated lists object with the updated card
-    const updatedLists = {
-      ...lists,
-      [listId]: {
-        ...lists[listId],
-        cards: [
-          ...lists[listId].cards.slice(0, cardIndex),
-          updatedCard,
-          ...lists[listId].cards.slice(cardIndex + 1),
-        ],
-      },
-    };
+    // Create a copy of the lists array
+    const copyLists = [...lists];
+
+    //Find the index of the activeList within the lists array
+    const listIndex = lists.findIndex((l) => l.id === activeList.id);
+
+    // Find the index of the activeCard within the cards array of the corresponding list
+    const cardIndex = activeList.cards.findIndex((c) => c.id === activeCard.id);
+
+    // Update the cards array within the corresponding list
+    copyLists[listIndex].cards[cardIndex] = updatedCard;
 
     // Update the lists using setLists prop
-    // setLists(updatedLists);
+    setLists(copyLists);
 
     // Close the description form
     setIsDescriptionFormOpen(false);
