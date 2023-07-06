@@ -6,6 +6,7 @@ import { BsTextParagraph } from "react-icons/bs";
 
 const CardEditModal = ({
   activeCard,
+  setActiveCard,
   activeList,
   lists,
   setLists,
@@ -41,6 +42,7 @@ const CardEditModal = ({
           {isDescriptionFormOpen && (
             <CardDescriptionForm
               activeCard={activeCard}
+              setActiveCard={setActiveCard}
               activeList={activeList}
               lists={lists}
               setLists={setLists}

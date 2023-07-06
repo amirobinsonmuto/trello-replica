@@ -213,6 +213,7 @@ const List = () => {
       {isModalOpen && (
         <CardEditModal
           activeCard={activeCard}
+          setActiveCard={setActiveCard}
           activeList={activeList}
           lists={lists}
           setLists={setLists}

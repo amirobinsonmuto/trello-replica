@@ -3,6 +3,7 @@ import { isCompositeComponent } from "react-dom/test-utils";
 
 const CardDescriptionForm = ({
   activeCard,
+  setActiveCard,
   activeList,
   lists,
   setLists,
@@ -24,6 +25,8 @@ const CardDescriptionForm = ({
       ...activeCard,
       description: newDescriptionText,
     };
+
+    setActiveCard(updatedCard);
 
     // Create a copy of the lists array
     const copyLists = [...lists];
