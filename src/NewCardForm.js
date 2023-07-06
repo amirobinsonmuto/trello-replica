@@ -18,7 +18,11 @@ const NewCardForm = ({
     if (newCardTitle.trim() !== "") {
       const updatedLists = lists.map((list) => {
         if (list.id === activeListId) {
-          const newCard = { id: Date.now(), text: newCardTitle };
+          const newCard = {
+            id: Date.now(),
+            text: newCardTitle,
+            description: "",
+          };
           return { ...list, cards: [...list.cards, newCard] };
         }
         return list;
