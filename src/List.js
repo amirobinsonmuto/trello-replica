@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NewListForm from "./NewListForm";
 import NewCardForm from "./NewCardForm";
+import CardEditModal from "./CardEditModal";
 import { TfiClose } from "react-icons/tfi";
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -33,6 +34,8 @@ const List = () => {
   const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
   const [isNewCardFormOpen, setIsNewCardFormOpen] = useState(false);
   const [activeListId, setActiveListId] = useState(null);
+  const [activeCard, setActiveCard] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDragStart = (e, listId, cardId) => {
     e.dataTransfer.setData("text/plain", JSON.stringify({ listId, cardId }));
@@ -120,6 +123,10 @@ const List = () => {
                 draggable
                 onDragStart={(e) => handleDragStart(e, list.id, card.id)}
                 data-index={index}
+                onClick={() => {
+                  setActiveCard(card);
+                  setIsModalOpen(true);
+                }}
               >
                 {card.text}
               </li>
@@ -169,6 +176,13 @@ const List = () => {
           />
         )}
       </div>
+      {/* modal */}
+      {isModalOpen && (
+        <CardEditModal
+          card={activeCard}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
