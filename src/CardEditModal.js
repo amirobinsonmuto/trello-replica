@@ -17,6 +17,7 @@ const CardEditModal = ({
     activeList.cards.findIndex((c) => c.id === activeCard.id)
   );
   const [newCardTitle, setNewCardTitle] = useState("");
+  const inputRef = useRef(null);
 
   useEffect(() => {
     setNewCardTitle(lists[listIndex].cards[cardIndex].title);
@@ -41,6 +42,7 @@ const CardEditModal = ({
     if (e.key === "Enter") {
       // Trigger form submission when Enter key is pressed
       handleSubmit(e);
+      inputRef.current.blur();
     }
   };
 
@@ -58,6 +60,7 @@ const CardEditModal = ({
             <form>
               <input
                 type="text"
+                ref={inputRef}
                 value={newCardTitle}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
