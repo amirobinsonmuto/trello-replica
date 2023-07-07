@@ -129,97 +129,99 @@ const List = () => {
   };
 
   return (
-    <div className="container mx-auto flex overflow-x-auto mt-24 pb-4 ">
-      {lists.map((list, index) => (
-        <div
-          key={list.id}
-          className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4 relative"
-          onDragOver={handleDragOver}
-          onDrop={(e) => handleDrop(e, list.id)}
-        >
-          <div className="flex justify-between mb-2">
-            <h3 className="text-lg font-bold">{list.title}</h3>
-            <button
-              onClick={() => {
-                removeList(list.id);
-              }}
-            >
-              <TfiClose className="close-icon" />
-            </button>
-          </div>
-          <ul>
-            {list.cards.map((card, index) => (
-              <li
-                key={card.id}
-                className="bg-white rounded-md p-2 mb-2 shadow-sm cursor-move hover:bg-gray-100 active:bg-gray-300"
-                draggable
-                onDragStart={(e) => handleDragStart(e, list.id, card.id)}
-                data-index={index}
-                onClick={() => {
-                  setActiveCard(card);
-                  setActiveList(list);
-                  setIsModalOpen(true);
-                }}
-              >
-                {card.title}
-              </li>
-            ))}
-          </ul>
-          <div>
-            {(!isNewCardFormOpen || activeList.id !== list.id) && (
+    <div className="board">
+      <div className="container mx-auto flex overflow-x-auto mt-24 pb-4 ">
+        {lists.map((list, index) => (
+          <div
+            key={list.id}
+            className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4 relative"
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, list.id)}
+          >
+            <div className="flex justify-between mb-2">
+              <h3 className="text-lg font-bold">{list.title}</h3>
               <button
                 onClick={() => {
-                  setActiveList(list);
-                  setIsNewCardFormOpen(true);
+                  removeList(list.id);
                 }}
-                className="flex items-center gap-2 mt-4 hover:opacity-70"
               >
-                <AiOutlinePlus />
-                <span>Add a card</span>
+                <TfiClose className="close-icon" />
               </button>
-            )}
-            {isNewCardFormOpen && activeList.id === list.id && (
-              <NewCardForm
-                lists={lists}
-                setLists={setLists}
-                setIsNewCardFormOpen={setIsNewCardFormOpen}
-                activeList={activeList}
-              />
-            )}
+            </div>
+            <ul>
+              {list.cards.map((card, index) => (
+                <li
+                  key={card.id}
+                  className="bg-white rounded-md p-2 mb-2 shadow-sm cursor-move hover:bg-gray-100 active:bg-gray-300"
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, list.id, card.id)}
+                  data-index={index}
+                  onClick={() => {
+                    setActiveCard(card);
+                    setActiveList(list);
+                    setIsModalOpen(true);
+                  }}
+                >
+                  {card.title}
+                </li>
+              ))}
+            </ul>
+            <div>
+              {(!isNewCardFormOpen || activeList.id !== list.id) && (
+                <button
+                  onClick={() => {
+                    setActiveList(list);
+                    setIsNewCardFormOpen(true);
+                  }}
+                  className="flex items-center gap-2 mt-4 hover:opacity-70"
+                >
+                  <AiOutlinePlus />
+                  <span>Add a card</span>
+                </button>
+              )}
+              {isNewCardFormOpen && activeList.id === list.id && (
+                <NewCardForm
+                  lists={lists}
+                  setLists={setLists}
+                  setIsNewCardFormOpen={setIsNewCardFormOpen}
+                  activeList={activeList}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      <div>
-        {!isNewListFormOpen && (
-          <button
-            onClick={() => {
-              setIsNewListFormOpen(!isNewListFormOpen);
-            }}
-            className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2"
-          >
-            Add another list
-          </button>
-        )}
-        {isNewListFormOpen && (
-          <NewListForm
+        <div>
+          {!isNewListFormOpen && (
+            <button
+              onClick={() => {
+                setIsNewListFormOpen(!isNewListFormOpen);
+              }}
+              className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2"
+            >
+              Add another list
+            </button>
+          )}
+          {isNewListFormOpen && (
+            <NewListForm
+              lists={lists}
+              setLists={setLists}
+              setIsNewListFormOpen={setIsNewListFormOpen}
+            />
+          )}
+        </div>
+        {/* modal */}
+        {isModalOpen && (
+          <CardEditModal
+            activeCard={activeCard}
+            setActiveCard={setActiveCard}
+            activeList={activeList}
             lists={lists}
             setLists={setLists}
-            setIsNewListFormOpen={setIsNewListFormOpen}
+            onClose={() => setIsModalOpen(false)}
           />
         )}
       </div>
-      {/* modal */}
-      {isModalOpen && (
-        <CardEditModal
-          activeCard={activeCard}
-          setActiveCard={setActiveCard}
-          activeList={activeList}
-          lists={lists}
-          setLists={setLists}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
     </div>
   );
 };
