@@ -5,7 +5,8 @@ import CardEditModal from "./CardEditModal";
 import { TfiClose } from "react-icons/tfi";
 import { AiOutlinePlus } from "react-icons/ai";
 
-const List = () => {
+
+const Board = () => {
   const [lists, setLists] = useState([
     {
       id: 1,
@@ -226,4 +227,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default Board;

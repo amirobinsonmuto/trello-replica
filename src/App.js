@@ -1,8 +1,8 @@
 import "./App.css";
-import List from "./List";
+import Board from "./Board";
 
 function App() {
-  return <List />;
+  return <Board />;
 }
 
 export default App;
