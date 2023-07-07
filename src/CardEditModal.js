@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardDescriptionForm from "./CardDescriptionForm";
 import { TfiClose } from "react-icons/tfi";
 import { BsCardText } from "react-icons/bs";
@@ -6,19 +6,50 @@ import { BsTextParagraph } from "react-icons/bs";
 
 const CardEditModal = ({
   activeCard,
-  setActiveCard,
   activeList,
   lists,
   setLists,
   onClose,
 }) => {
   const [isDescriptionFormOpen, setIsDescriptionFormOpen] = useState(false);
+  const [listIndex] = useState(lists.findIndex((l) => l.id === activeList.id));
+  const [cardIndex] = useState(
+    activeList.cards.findIndex((c) => c.id === activeCard.id)
+  );
+  const [newCardTitle, setNewCardTitle] = useState("");
 
-  //Find the index of the activeList within the lists array
-  const listIndex = lists.findIndex((l) => l.id === activeList.id);
+  useEffect(() => {
+    setNewCardTitle(lists[listIndex].cards[cardIndex].title);
+  }, [listIndex, cardIndex, lists]);
 
-  // Find the index of the activeCard within the cards array of the corresponding list
-  const cardIndex = activeList.cards.findIndex((c) => c.id === activeCard.id);
+  const handleInputChange = (e) => {
+    setNewCardTitle(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Create a copy of the activeCard object
+    const updatedCard = {
+      ...lists[listIndex].cards[cardIndex],
+      title: newCardTitle,
+    };
+
+    // Create a copy of the lists array
+    const copyLists = [...lists];
+
+    // Update the cards array within the corresponding list
+    copyLists[listIndex].cards[cardIndex] = updatedCard;
+
+    // Update the lists using setLists prop
+    setLists(copyLists);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      // Trigger form submission when Enter key is pressed
+      handleSubmit(e);
+    }
+  };
 
   return (
     <>
@@ -27,9 +58,15 @@ const CardEditModal = ({
         <div className="w-full">
           <div className="flex gap-4 items-center">
             <BsCardText />
-            <h3 className="text-xl font-bold">
-              {lists[listIndex].cards[cardIndex].text}
-            </h3>
+            <form>
+              <input
+                type="text"
+                value={newCardTitle}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                className="text-xl font-bold"
+              />
+            </form>
           </div>
           <p className="text-sm ml-9 mb-10">
             in list "{lists[listIndex].title}"

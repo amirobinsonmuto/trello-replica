@@ -15,7 +15,7 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
         if (list.id === activeList.id) {
           const newCard = {
             id: Date.now(),
-            text: newCardTitle,
+            title: newCardTitle,
             description: "",
           };
           return { ...list, cards: [...list.cards, newCard] };
