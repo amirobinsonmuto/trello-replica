@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CardDescriptionForm from "./CardDescriptionForm";
 import { TfiClose } from "react-icons/tfi";
 import { BsCardText } from "react-icons/bs";
@@ -22,10 +22,6 @@ const CardEditModal = ({
     setNewCardTitle(lists[listIndex].cards[cardIndex].title);
   }, [listIndex, cardIndex, lists]);
 
-  const handleInputChange = (e) => {
-    setNewCardTitle(e.target.value);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Create a copy of the activeCard object
@@ -33,13 +29,10 @@ const CardEditModal = ({
       ...lists[listIndex].cards[cardIndex],
       title: newCardTitle,
     };
-
     // Create a copy of the lists array
     const copyLists = [...lists];
-
     // Update the cards array within the corresponding list
     copyLists[listIndex].cards[cardIndex] = updatedCard;
-
     // Update the lists using setLists prop
     setLists(copyLists);
   };
@@ -49,6 +42,10 @@ const CardEditModal = ({
       // Trigger form submission when Enter key is pressed
       handleSubmit(e);
     }
+  };
+
+  const handleInputChange = (e) => {
+    setNewCardTitle(e.target.value);
   };
 
   return (
@@ -64,6 +61,7 @@ const CardEditModal = ({
                 value={newCardTitle}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
+                onBlur={handleSubmit}
                 className="text-xl font-bold"
               />
             </form>
