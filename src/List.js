@@ -130,7 +130,7 @@ const List = () => {
 
   return (
     <div className="board">
-      <div className="container mx-auto flex overflow-x-auto mt-24 pb-4 ">
+      <div className="flex items-start justify-start gap-4 h-full p-12">
         {lists.map((list, index) => (
           <div
             key={list.id}
