@@ -19,7 +19,7 @@ const Card = ({
         setIsModalOpen(true);
       }}
     >
-      {card.title}
+     
     </li>
   );
 };

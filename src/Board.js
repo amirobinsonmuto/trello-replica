@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Card from "./Card";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 import NewListForm from "./NewListForm";
 import NewCardForm from "./NewCardForm";
 import CardEditModal from "./CardEditModal";
 import { TfiClose } from "react-icons/tfi";
 import { AiOutlinePlus } from "react-icons/ai";
-// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Board = () => {
   const [lists, setLists] = useState([
@@ -16,53 +16,21 @@ const Board = () => {
         {
           id: 1,
           title: "Task 1",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          description: "Lorem ipsum dolor sit amet...",
         },
         {
           id: 2,
           title: "Task 2",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          description: "Lorem ipsum dolor sit amet...",
         },
         {
           id: 3,
           title: "Task 3",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          description: "Lorem ipsum dolor sit amet...",
         },
       ],
     },
-    {
-      id: 2,
-      title: "Sample list - In Progress",
-      cards: [
-        {
-          id: 4,
-          title: "Task 4",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        },
-        {
-          id: 5,
-          title: "Task 5",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Sample list - Done",
-      cards: [
-        {
-          id: 6,
-          title: "Task 6",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        },
-      ],
-    },
+    // Other list objects
   ]);
 
   const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
@@ -71,57 +39,55 @@ const Board = () => {
   const [activeCard, setActiveCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleDragStart = (e, listId, cardId) => {
-    e.dataTransfer.setData("text/plain", JSON.stringify({ listId, cardId }));
-  };
+  const handleDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+    const { source, destination } = result;
 
-  const handleDrop = (e, listId) => {
-    const data = e.dataTransfer.getData("text/plain");
-    const { listId: sourceListId, cardId } = JSON.parse(data);
-    const sourceList = lists.find((list) => list.id === sourceListId);
-    const card = sourceList.cards.find((card) => card.id === cardId);
+    // Move card within the same list
+    if (source.droppableId === destination.droppableId) {
+      const listId = parseInt(source.droppableId);
+      const list = lists.find((item) => item.id === listId);
+      const updatedCards = Array.from(list.cards);
+      const [movedCard] = updatedCards.splice(source.index, 1);
+      updatedCards.splice(destination.index, 0, movedCard);
 
-    if (sourceListId === listId) {
-      // Reorder cards within the same list
-      const updatedCards = Array.from(sourceList.cards);
-      const cardIndex = updatedCards.findIndex((card) => card.id === cardId);
-      updatedCards.splice(cardIndex, 1);
-      updatedCards.splice(
-        cardIndex < e.target.dataset.index
-          ? e.target.dataset.index - 1
-          : e.target.dataset.index,
-        0,
-        card
-      );
-      const updatedLists = lists.map((list) => {
-        if (list.id === sourceListId) {
-          return { ...list, cards: updatedCards };
+      const updatedLists = lists.map((item) => {
+        if (item.id === listId) {
+          return { ...item, cards: updatedCards };
         }
-        return list;
+        return item;
       });
+
       setLists(updatedLists);
     } else {
       // Move card to a different list
-      const updatedSourceCards = Array.from(sourceList.cards);
-      const cardIndex = updatedSourceCards.findIndex(
-        (card) => card.id === cardId
+      const sourceListId = parseInt(source.droppableId);
+      const destinationListId = parseInt(destination.droppableId);
+
+      const sourceList = lists.find((item) => item.id === sourceListId);
+      const destinationList = lists.find(
+        (item) => item.id === destinationListId
       );
-      updatedSourceCards.splice(cardIndex, 1);
-      const updatedLists = lists.map((list) => {
-        if (list.id === sourceListId) {
-          return { ...list, cards: updatedSourceCards };
+
+      const updatedSourceCards = Array.from(sourceList.cards);
+      const updatedDestinationCards = Array.from(destinationList.cards);
+
+      const [movedCard] = updatedSourceCards.splice(source.index, 1);
+      updatedDestinationCards.splice(destination.index, 0, movedCard);
+
+      const updatedLists = lists.map((item) => {
+        if (item.id === sourceListId) {
+          return { ...item, cards: updatedSourceCards };
+        } else if (item.id === destinationListId) {
+          return { ...item, cards: updatedDestinationCards };
         }
-        if (list.id === listId) {
-          return { ...list, cards: [...list.cards, card] };
-        }
-        return list;
+        return item;
       });
+
       setLists(updatedLists);
-      setActiveList(null); // Reset the active list ID
     }
   };
 
@@ -131,95 +97,112 @@ const Board = () => {
   };
 
   return (
-    <div className="board">
-      <div className="flex items-start justify-start gap-4 h-full p-12">
-        {lists.map((list) => (
-          <div
-            key={list.id}
-            className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4 relative"
-            onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, list.id)}
-          >
-            <div className="flex justify-between mb-2">
-              <h3 className="text-lg font-bold">{list.title}</h3>
-              <button
-                onClick={() => {
-                  removeList(list.id);
-                }}
-              >
-                <TfiClose className="close-icon" />
-              </button>
-            </div>
-            <ul>
-              {list.cards.map((card) => (
-                <Card
-                  key={card.id}
-                  card={card}
-                  list={list}
-                  handleDragStart={handleDragStart}
-                  setActiveCard={setActiveCard}
-                  setActiveList={setActiveList}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              ))}
-            </ul>
-            <div>
-              {(!isNewCardFormOpen || activeList.id !== list.id) && (
-                <button
-                  onClick={() => {
-                    setActiveList(list);
-                    setIsNewCardFormOpen(true);
-                  }}
-                  className="flex items-center gap-2 mt-4 hover:opacity-70"
-                >
-                  <AiOutlinePlus />
-                  <span>Add a card</span>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="board">
+        <div className="board flex items-start justify-start gap-4 h-full p-12">
+          {lists.map((list) => (
+            <div className="bg-gray-100 flex-none border w-72 rounded mr-4 relative">
+              <div className="flex justify-between m-4">
+                <h3 className="text-lg font-bold">{list.title}</h3>
+                <button onClick={() => removeList(list.id)}>
+                  <TfiClose className="close-icon" />
                 </button>
-              )}
-              {isNewCardFormOpen && activeList.id === list.id && (
-                <NewCardForm
-                  lists={lists}
-                  setLists={setLists}
-                  setIsNewCardFormOpen={setIsNewCardFormOpen}
-                  activeList={activeList}
-                />
-              )}
+              </div>
+              <Droppable key={list.id} droppableId={list.id.toString()}>
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={`min-h-[10px] py-2 ${
+                      snapshot.isDraggingOver ? "droppable-active" : ""
+                    } `}
+                  >
+                    <ul>
+                      {list.cards.map((card, index) => (
+                        <Draggable
+                          key={card.id}
+                          draggableId={card.id.toString()}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <li
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className=" bg-white rounded-md p-2 mx-4 mb-2 shadow-sm cursor-move hover:bg-gray-100 active:bg-gray-300"
+                              draggable
+                              onClick={() => {
+                                setActiveCard(card);
+                                setActiveList(list);
+                                setIsModalOpen(true);
+                              }}
+                            >
+                              {card.title}
+                            </li>
+                          )}
+                        </Draggable>
+                      ))}
+                    </ul>
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              <div>
+                {!isNewCardFormOpen ||
+                (activeList && activeList.id !== list.id) ? (
+                  <button
+                    onClick={() => {
+                      setActiveList(list);
+                      setIsNewCardFormOpen(true);
+                    }}
+                    className="flex items-center gap-2 m-4 hover:opacity-70"
+                  >
+                    <AiOutlinePlus />
+                    <span>Add a card</span>
+                  </button>
+                ) : (
+                  <NewCardForm
+                    lists={lists}
+                    setLists={setLists}
+                    setIsNewCardFormOpen={setIsNewCardFormOpen}
+                    activeList={activeList}
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
 
-        <div>
-          {!isNewListFormOpen && (
-            <button
-              onClick={() => {
-                setIsNewListFormOpen(!isNewListFormOpen);
-              }}
-              className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2"
-            >
-              Add another list
-            </button>
-          )}
-          {isNewListFormOpen && (
-            <NewListForm
+          <div>
+            {!isNewListFormOpen ? (
+              <button
+                onClick={() => setIsNewListFormOpen(true)}
+                className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2"
+              >
+                Add another list
+              </button>
+            ) : (
+              <NewListForm
+                lists={lists}
+                setLists={setLists}
+                setIsNewListFormOpen={setIsNewListFormOpen}
+              />
+            )}
+          </div>
+
+          {/* modal */}
+          {isModalOpen && (
+            <CardEditModal
+              activeCard={activeCard}
+              setActiveCard={setActiveCard}
+              activeList={activeList}
               lists={lists}
               setLists={setLists}
-              setIsNewListFormOpen={setIsNewListFormOpen}
+              onClose={() => setIsModalOpen(false)}
             />
           )}
         </div>
-        {/* modal */}
-        {isModalOpen && (
-          <CardEditModal
-            activeCard={activeCard}
-            setActiveCard={setActiveCard}
-            activeList={activeList}
-            lists={lists}
-            setLists={setLists}
-            onClose={() => setIsModalOpen(false)}
-          />
-        )}
       </div>
-    </div>
+    </DragDropContext>
   );
 };
 

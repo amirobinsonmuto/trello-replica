@@ -23,6 +23,11 @@ code {
   background-size: cover;
 }
 
+ul,
+li {
+  list-style: none;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -117,4 +122,11 @@ code {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 9998;
+}
+
+/* Drag and Drops*/
+.droppable-active {
+  background-color: #e4e4e4;
+  opacity: 0.6;
+  transition: all 0.3s ease-in-out;
 }
