@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+import DraggableCard from "./Card";
 import NewListForm from "./NewListForm";
 import NewCardForm from "./NewCardForm";
 import CardEditModal from "./CardEditModal";
@@ -101,7 +101,7 @@ const Board = () => {
       <div className="board">
         <div className="board flex items-start justify-start gap-4 h-full p-12">
           {lists.map((list) => (
-            <div className="bg-gray-100 flex-none border w-72 rounded mr-4 relative">
+            <div className="bg-gray-100 flex-none border w-72 rounded-xl mr-4 relative">
               <div className="flex justify-between m-4">
                 <h3 className="text-lg font-bold">{list.title}</h3>
                 <button onClick={() => removeList(list.id)}>
@@ -119,28 +119,15 @@ const Board = () => {
                   >
                     <ul>
                       {list.cards.map((card, index) => (
-                        <Draggable
+                        <DraggableCard
                           key={card.id}
-                          draggableId={card.id.toString()}
+                          card={card}
+                          list={list}
                           index={index}
-                        >
-                          {(provided) => (
-                            <li
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className=" bg-white rounded-md p-2 mx-4 mb-2 shadow-sm cursor-move hover:bg-gray-100 active:bg-gray-300"
-                              draggable
-                              onClick={() => {
-                                setActiveCard(card);
-                                setActiveList(list);
-                                setIsModalOpen(true);
-                              }}
-                            >
-                              {card.title}
-                            </li>
-                          )}
-                        </Draggable>
+                          setActiveCard={setActiveCard}
+                          setActiveList={setActiveList}
+                          setIsModalOpen={setIsModalOpen}
+                        />
                       ))}
                     </ul>
                     {provided.placeholder}
@@ -176,7 +163,7 @@ const Board = () => {
             {!isNewListFormOpen ? (
               <button
                 onClick={() => setIsNewListFormOpen(true)}
-                className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2"
+                className="bg-gray-100 text-white rounded-xl inline-block align-top w-72 p-2 mr-2 transition bg-opacity-40 hover:bg-opacity-20 duration-300"
               >
                 Add another list
               </button>
