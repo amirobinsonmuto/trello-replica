@@ -28,11 +28,11 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
   };
 
   return (
-    <div className="bg-gray-100 mt-4 mr-2 w-full">
+    <div className="bg-gray-100 p-4 w-full">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          className="h-10 p-2 mb-4 w-full"
+          className="h-10 p-2 mb-4 w-full rounded-md"
           placeholder="Enter a title for this card"
           value={newCardTitle}
           onChange={handleInputChange}

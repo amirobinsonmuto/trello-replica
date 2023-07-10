@@ -53,7 +53,7 @@ const CardEditModal = ({
   return (
     <>
       <div className="modal-overlay"></div>
-      <div className="modal-container flex justify-between relative">
+      <div className="modal-container rounded-xl flex justify-between relative">
         <div className="w-full">
           <div className="flex gap-4 items-center">
             <BsCardText />

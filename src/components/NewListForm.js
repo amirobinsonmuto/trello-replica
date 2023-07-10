@@ -20,11 +20,11 @@ const NewListForm = ({ lists, setLists, setIsNewListFormOpen }) => {
   };
 
   return (
-    <div className="bg-gray-100 rounded-md inline-block align-top w-72 p-2 mr-2">
+    <div className="bg-gray-100 rounded-xl inline-block align-top w-72 p-4">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          className="h-10 p-2 mb-2"
+          className="h-10 p-2 mb-4 w-full rounded-md "
           placeholder="Enter list title..."
           value={newListTitle}
           onChange={handleInputChange}
