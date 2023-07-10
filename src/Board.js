@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import Card from "./Card";
 import NewListForm from "./NewListForm";
 import NewCardForm from "./NewCardForm";
 import CardEditModal from "./CardEditModal";
 import { TfiClose } from "react-icons/tfi";
 import { AiOutlinePlus } from "react-icons/ai";
-
+// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Board = () => {
   const [lists, setLists] = useState([
@@ -132,7 +133,7 @@ const Board = () => {
   return (
     <div className="board">
       <div className="flex items-start justify-start gap-4 h-full p-12">
-        {lists.map((list, index) => (
+        {lists.map((list) => (
           <div
             key={list.id}
             className="bg-gray-100 flex-none border w-72 p-4 rounded mr-4 relative"
@@ -150,21 +151,16 @@ const Board = () => {
               </button>
             </div>
             <ul>
-              {list.cards.map((card, index) => (
-                <li
+              {list.cards.map((card) => (
+                <Card
                   key={card.id}
-                  className="bg-white rounded-md p-2 mb-2 shadow-sm cursor-move hover:bg-gray-100 active:bg-gray-300"
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, list.id, card.id)}
-                  data-index={index}
-                  onClick={() => {
-                    setActiveCard(card);
-                    setActiveList(list);
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {card.title}
-                </li>
+                  card={card}
+                  list={list}
+                  handleDragStart={handleDragStart}
+                  setActiveCard={setActiveCard}
+                  setActiveList={setActiveList}
+                  setIsModalOpen={setIsModalOpen}
+                />
               ))}
             </ul>
             <div>
