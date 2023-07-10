@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import SubNavBar from "../SubNavBar";
 import DraggableCard from "./Card";
 import NewListForm from "./NewListForm";
 import NewCardForm from "./NewCardForm";
@@ -97,9 +98,10 @@ const Board = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="board">
-        <div className="board flex items-start justify-start gap-4 h-full p-12">
+    <div className="board">
+      <SubNavBar />
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <div className="board flex items-start justify-start gap-4 p-12">
           {lists.map((list) => (
             <div className="bg-gray-100 flex-none border w-72 rounded-xl mr-4 relative">
               <div className="flex justify-between m-4">
@@ -188,8 +190,8 @@ const Board = () => {
             />
           )}
         </div>
-      </div>
-    </DragDropContext>
+      </DragDropContext>
+    </div>
   );
 };
 
