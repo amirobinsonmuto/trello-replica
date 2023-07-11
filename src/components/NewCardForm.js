@@ -14,9 +14,7 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
     if (newCardTitle.trim() === "") {
       alert("Please enter the card title");
       return;
-    }
-
-    if (newCardTitle.trim() !== "") {
+    } else {
       const updatedLists = lists.map((list) => {
         if (list.id === activeList.id) {
           const newCard = {
@@ -39,21 +37,21 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
         <input
           type="text"
           className="h-10 p-2 mb-4 w-full rounded-md"
-          placeholder="Enter a title for this card"
+          placeholder="Enter a title for this card..."
           value={newCardTitle}
           onChange={handleInputChange}
+          autoFocus
         />
         <button type="submit" className="button-primary me-4">
-          Add Card
+          Add card
         </button>
         <button
           type="button"
           onClick={() => {
             setIsNewCardFormOpen(false);
           }}
-          className="close-button"
         >
-          <TfiClose className="close-icon" />
+          <TfiClose />
         </button>
       </form>
     </div>

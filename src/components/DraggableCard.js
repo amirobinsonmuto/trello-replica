@@ -1,7 +1,14 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-const DraggableCard = ({ card, list, index, setActiveCard, setActiveList, setIsModalOpen }) => {
+const DraggableCard = ({
+  card,
+  list,
+  index,
+  setActiveCard,
+  setActiveList,
+  setIsModalOpen,
+}) => {
   const handleCardClick = () => {
     setActiveCard(card);
     setActiveList(list);

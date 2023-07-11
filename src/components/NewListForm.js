@@ -14,15 +14,15 @@ const NewListForm = ({ lists, setLists, setIsNewListFormOpen }) => {
     if (newListTitle.trim() === "") {
       alert("Please enter the list title");
       return;
+    } else {
+      const newList = {
+        id: Date.now(),
+        title: newListTitle,
+        cards: [],
+      };
+      setLists([...lists, newList]);
+      setIsNewListFormOpen(false);
     }
-
-    const newList = {
-      id: Date.now(),
-      title: newListTitle,
-      cards: [],
-    };
-    setLists([...lists, newList]);
-    setIsNewListFormOpen(false);
   };
 
   return (
@@ -34,18 +34,18 @@ const NewListForm = ({ lists, setLists, setIsNewListFormOpen }) => {
           placeholder="Enter list title..."
           value={newListTitle}
           onChange={handleInputChange}
+          autoFocus
         />
         <button type="submit" className="button-primary me-4">
-          Add List
+          Add list
         </button>
         <button
           type="button"
           onClick={() => {
             setIsNewListFormOpen(false);
           }}
-          className="close-button"
         >
-          <TfiClose className="close-icon" />
+          <TfiClose />
         </button>
       </form>
     </div>

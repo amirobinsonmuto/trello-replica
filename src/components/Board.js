@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import DraggableCard from "./Card";
+import DraggableCard from "./DraggableCard";
 import NewListForm from "./NewListForm";
 import NewCardForm from "./NewCardForm";
 import CardEditModal from "./CardEditModal";
@@ -30,7 +30,6 @@ const Board = () => {
         },
       ],
     },
-    // Other list objects
   ]);
 
   const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
@@ -98,7 +97,7 @@ const Board = () => {
     setLists(updatedLists);
   };
 
-  // Edit List title functions
+  // Edit list title functions
   const handleListTitleClick = (listId, listTitle) => {
     setActiveList(listId);
     setEditedListTitle(listTitle);
@@ -126,7 +125,7 @@ const Board = () => {
   return (
     <div className="board">
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="flex items-start justify-start gap-4 p-12 pt-20">
+        <div className="flex items-start justify-start gap-2 pl-20 pt-20">
           {lists.map((list) => (
             <div className=" bg-gray-100 flex-none border w-72 rounded-xl mr-4 relative">
               <div className="flex justify-between m-4">
@@ -185,7 +184,7 @@ const Board = () => {
                       setActiveList(list);
                       setIsNewCardFormOpen(true);
                     }}
-                    className="flex items-center gap-2 m-4 hover:opacity-70"
+                    className="flex items-center gap-2 mx-5 mb-4 hover:opacity-70"
                   >
                     <AiOutlinePlus />
                     <span>Add a card</span>

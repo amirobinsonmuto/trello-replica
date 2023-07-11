@@ -57,17 +57,15 @@ const CardEditModal = ({
         <div className="w-full">
           <div className="flex gap-4 items-center">
             <BsCardText />
-            <form>
-              <input
-                type="text"
-                ref={inputRef}
-                value={newCardTitle}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                onBlur={handleSubmit}
-                className="text-xl font-bold"
-              />
-            </form>
+            <input
+              type="text"
+              ref={inputRef}
+              value={newCardTitle}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              onBlur={handleSubmit}
+              className="text-xl font-bold"
+            />
           </div>
           <p className="text-sm ml-9 mb-10">
             in list "{lists[listIndex].title}"
