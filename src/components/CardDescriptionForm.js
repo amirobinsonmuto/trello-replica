@@ -48,7 +48,7 @@ const CardDescriptionForm = ({
             ? "Write description"
             : newDescriptionText
         }
-        className="border block mb-4 p-2"
+        className="border block mb-4 p-2 "
       ></textarea>
       <button type="submit" className="button-primary me-4">
         Save

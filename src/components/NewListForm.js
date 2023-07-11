@@ -10,6 +10,12 @@ const NewListForm = ({ lists, setLists, setIsNewListFormOpen }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (newListTitle.trim() === "") {
+      alert("Please enter the list title");
+      return;
+    }
+
     const newList = {
       id: Date.now(),
       title: newListTitle,

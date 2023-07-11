@@ -10,6 +10,12 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (newCardTitle.trim() === "") {
+      alert("Please enter the card title");
+      return;
+    }
+
     if (newCardTitle.trim() !== "") {
       const updatedLists = lists.map((list) => {
         if (list.id === activeList.id) {
