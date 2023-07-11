@@ -16,7 +16,7 @@ import {
 
 const SubNavBar = () => {
   return (
-    <div className="flex items-center justify-between bg-gray-900 bg-opacity-20 text-white px-4 py-2">
+    <div className="absolute w-full flex items-center justify-between bg-gray-900 bg-opacity-20 text-white px-4 py-2">
       <div className="flex items-center">
         <span className="mr-2 text-lg font-semibold">Sample Board</span>
         <RiStarLine className="text-white" />
