@@ -9,6 +9,7 @@ import {
   FiSun,
   FiUser,
 } from "react-icons/fi";
+import { BsTrello } from "react-icons/bs";
 
 const Navbar = () => {
   return (
@@ -17,6 +18,10 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <FiMenu className="text-xl" />
           <div className="dots" />
+        </div>
+        <div className="flex items-center gap-2">
+          <BsTrello className="text-xl" />
+          <span className="font-bold" >Trella</span>
         </div>
         <div className="flex items-center gap-2">
           <span>Workspaces</span>
