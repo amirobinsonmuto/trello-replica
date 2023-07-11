@@ -38,6 +38,7 @@ const Board = () => {
   const [activeList, setActiveList] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editedListTitle, setEditedListTitle] = useState("");
 
   const handleDragEnd = (result) => {
     if (!result.destination) {
@@ -91,9 +92,35 @@ const Board = () => {
     }
   };
 
+  // Remove list function
   const removeList = (id) => {
     const updatedLists = lists.filter((list) => list.id !== id);
     setLists(updatedLists);
+  };
+
+  // Edit List title functions
+  const handleListTitleClick = (listId, listTitle) => {
+    setActiveList(listId);
+    setEditedListTitle(listTitle);
+  };
+
+  const handleListTitleChange = (e) => {
+    setEditedListTitle(e.target.value);
+  };
+
+  const handleListTitleSubmit = (listId) => {
+    const updatedLists = lists.map((list) =>
+      list.id === listId ? { ...list, title: editedListTitle } : list
+    );
+    setLists(updatedLists);
+    setActiveList(null);
+    setEditedListTitle("");
+  };
+
+  const handleListTitleKeyDown = (e, listId) => {
+    if (e.key === "Enter") {
+      handleListTitleSubmit(listId);
+    }
   };
 
   return (
@@ -103,7 +130,23 @@ const Board = () => {
           {lists.map((list) => (
             <div className=" bg-gray-100 flex-none border w-72 rounded-xl mr-4 relative">
               <div className="flex justify-between m-4">
-                <h3 className="text-lg font-bold">{list.title}</h3>
+                {activeList === list.id ? (
+                  <input
+                    type="text"
+                    className="text-lg font-bold w-full mr-2"
+                    value={editedListTitle}
+                    onChange={handleListTitleChange}
+                    onBlur={() => handleListTitleSubmit(list.id)}
+                    onKeyDown={(e) => handleListTitleKeyDown(e, list.id)}
+                  />
+                ) : (
+                  <h3
+                    className="text-lg font-bold cursor-pointer"
+                    onClick={() => handleListTitleClick(list.id, list.title)}
+                  >
+                    {list.title}
+                  </h3>
+                )}
                 <button onClick={() => removeList(list.id)}>
                   <TfiClose className="close-icon" />
                 </button>
