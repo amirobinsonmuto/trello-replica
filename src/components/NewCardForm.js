@@ -38,7 +38,7 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
           onChange={handleInputChange}
         />
         <button type="submit" className="button-primary me-4">
-          Add card
+          Add Card
         </button>
         <button
           type="button"
