@@ -133,7 +133,7 @@ const Board = () => {
                 {activeList === list.id ? (
                   <input
                     type="text"
-                    className="text-lg font-bold w-full mr-2"
+                    className="text-lg font-bold w-full mr-6"
                     value={editedListTitle}
                     onChange={handleListTitleChange}
                     onBlur={() => handleListTitleSubmit(list.id)}
@@ -141,14 +141,14 @@ const Board = () => {
                   />
                 ) : (
                   <h3
-                    className="text-lg font-bold cursor-pointer"
+                    className="text-lg font-bold cursor-pointer mr-6"
                     onClick={() => handleListTitleClick(list.id, list.title)}
                   >
                     {list.title}
                   </h3>
                 )}
                 <button onClick={() => removeList(list.id)}>
-                  <TfiClose className="close-icon" />
+                  <TfiClose className="absolute top-6 right-5" />
                 </button>
               </div>
               <Droppable key={list.id} droppableId={list.id.toString()}>

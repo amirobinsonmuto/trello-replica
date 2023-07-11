@@ -34,7 +34,7 @@ const NewCardForm = ({ lists, setLists, setIsNewCardFormOpen, activeList }) => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 w-full">
+    <div className="bg-gray-100 px-4 pb-4 w-full">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
