@@ -28,6 +28,81 @@ const Board = () => {
           title: "Task 3",
           description: "Lorem ipsum dolor sit amet...",
         },
+        {
+          id: 1,
+          title: "Task 1",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 2,
+          title: "Task 2",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 3,
+          title: "Task 3",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 1,
+          title: "Task 1",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 2,
+          title: "Task 2",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 3,
+          title: "Task 3",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 1,
+          title: "Task 1",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 2,
+          title: "Task 2",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 3,
+          title: "Task 3",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 1,
+          title: "Task 1",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 2,
+          title: "Task 2",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 3,
+          title: "Task 3",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 1,
+          title: "Task 1",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 2,
+          title: "Task 2",
+          description: "Lorem ipsum dolor sit amet...",
+        },
+        {
+          id: 3,
+          title: "Task 3",
+          description: "Lorem ipsum dolor sit amet...",
+        },
       ],
     },
     // Other list objects
@@ -101,7 +176,7 @@ const Board = () => {
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex items-start justify-start gap-4 p-12 pt-20">
           {lists.map((list) => (
-            <div className="bg-gray-100 flex-none border w-72 rounded-xl mr-4 relative">
+            <div className=" bg-gray-100 flex-none border w-72 rounded-xl mr-4 relative">
               <div className="flex justify-between m-4">
                 <h3 className="text-lg font-bold">{list.title}</h3>
                 <button onClick={() => removeList(list.id)}>
@@ -113,7 +188,7 @@ const Board = () => {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={`min-h-[10px] py-2 ${
+                    className={`list-scroll-bar min-h-[10px] py-2 ${
                       snapshot.isDraggingOver ? "droppable-active" : ""
                     } `}
                   >
