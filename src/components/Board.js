@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import DraggableCard from "./DraggableCard";
 import NewListForm from "./NewListForm";
@@ -6,6 +6,7 @@ import NewCardForm from "./NewCardForm";
 import CardEditModal from "./CardEditModal";
 import { TfiClose } from "react-icons/tfi";
 import { AiOutlinePlus } from "react-icons/ai";
+import apiCall from "./helper/unsplashapi";
 
 const Board = () => {
   const [lists, setLists] = useState([
@@ -31,6 +32,17 @@ const Board = () => {
       ],
     },
   ]);
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    apiCall()
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        console.error("Error fetching image URL:", error);
+      });
+  }, []);
 
   const [isNewListFormOpen, setIsNewListFormOpen] = useState(false);
   const [isNewCardFormOpen, setIsNewCardFormOpen] = useState(false);
@@ -123,7 +135,7 @@ const Board = () => {
   };
 
   return (
-    <div className="board">
+    <div className="board" style={{ backgroundImage: `url(${imageUrl})` }}>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex items-start justify-start gap-2 pl-20 pt-20">
           {lists.map((list) => (
