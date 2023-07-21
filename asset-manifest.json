@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/trello-replica/static/css/main.a8b5b50c.css",
+    "main.js": "/trello-replica/static/js/main.a01fc316.js",
+    "index.html": "/trello-replica/index.html",
+    "main.a8b5b50c.css.map": "/trello-replica/static/css/main.a8b5b50c.css.map",
+    "main.a01fc316.js.map": "/trello-replica/static/js/main.a01fc316.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a8b5b50c.css",
+    "static/js/main.a01fc316.js"
+  ]
+}
